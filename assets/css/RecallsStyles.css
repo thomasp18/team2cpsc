@@ -1,0 +1,39 @@
+/* #wrapper {
+  max-width: 991px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn {
+  max-width: 991px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table thead {
+  background-color: darkorange;
+}
+
+table, tr {
+  border: 1px solid;
+}
+
+.logo {
+  margin: 10px;
+}
+
+.fab {
+  color: white;
+}
+
+.fab:hover {
+  color: #FDB022;
+} */
