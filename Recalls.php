@@ -103,7 +103,7 @@
                         </div>
                     </div>
                     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                        <input type="search" name="search" placeholder="Search recall listing..." style="margin: 0px;width: 300px;" >
+                        <input type="search" name="search" placeholder="Search recall product(s)..." style="margin: 0px;width: 300px;" >
                         <button name="BTNsrch" type="submit" style="background: #FDB022; border-style:none; border-radius: 4px; color: white;"><i class="fas fa-search"></i></button>
                     </form>
                 </div>

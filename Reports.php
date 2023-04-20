@@ -55,7 +55,9 @@
                 </div>
             </div>
             <div class="text-center">
-                <iframe title="Sprint3_BusinessAnalystV11" width="1280" height="800" src="https://app.powerbi.com/view?r=eyJrIjoiMmRmNjRmMWUtYTc5ZS00Y2RmLWI1Y2ItZjRkNzlmNzFhMzcwIiwidCI6IjYwOTU2ODg0LTEwYWQtNDBmYS04NjNkLTRmMzJjMWUzYTM3YSIsImMiOjF9" frameborder="0" allowFullScreen="true"></iframe>
+                <!-- <iframe title="Sprint3_BusinessAnalystV11" width="1280" height="800" src="https://app.powerbi.com/view?r=eyJrIjoiMmRmNjRmMWUtYTc5ZS00Y2RmLWI1Y2ItZjRkNzlmNzFhMzcwIiwidCI6IjYwOTU2ODg0LTEwYWQtNDBmYS04NjNkLTRmMzJjMWUzYTM3YSIsImMiOjF9" frameborder="0" allowFullScreen="true"></iframe> -->
+                <iframe id="mang" title="Report Section" width="1280" height="800" src="https://app.powerbi.com/view?r=eyJrIjoiMmFjYjNiZWEtM2Q2Mi00ZWMwLWI3OGQtOTQ2ZGM4MTY2MjJiIiwidCI6IjYwOTU2ODg0LTEwYWQtNDBmYS04NjNkLTRmMzJjMWUzYTM3YSIsImMiOjF9" frameborder="0" allowFullScreen="true"></iframe>
+                <iframe id="invest" title="Sprint3_Investigator_BusinessAnalystV14 (1)" width="1280" height="800" src="https://app.powerbi.com/view?r=eyJrIjoiMWZmZmZmZTEtZGE1MS00YTQxLThlY2ItZWJmNzJiNTEyOWNkIiwidCI6IjYwOTU2ODg0LTEwYWQtNDBmYS04NjNkLTRmMzJjMWUzYTM3YSIsImMiOjF9" frameborder="0" allowFullScreen="true"></iframe>
             </div>
         </section>
     </div>

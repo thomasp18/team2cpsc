@@ -53,6 +53,18 @@
             transition: 0.2s;
         }
     </style>
+
+    <?php 
+        if (isset($_POST["delete"])) {
+            if (isset($_POST["listingid"])) {
+                require_once("db.php");
+                $sql = "DELETE FROM Listings WHERE listingID = ".$_POST['listingid'];
+                $result = $mydb->query($sql);
+            }
+        }
+        $search = "";
+    ?>
+
 </head>
 
 <body style="height: 650px;text-align: center;background: white;">
@@ -78,7 +90,7 @@
                         <div class="col-md-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
                             <div>
                                 <h1 class="text-uppercase fw-bold text-white mb-3">Listed Products</h1>
-                                <p class="mb-4">Look through our list of recalled products of the CPSC. Search below to get started.</p>
+                                <p class="mb-4">Look through our table of seller listings.</p>
                             </div>
                         </div>
                     </div>
@@ -114,17 +126,95 @@
                     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" id="insert_form">
                         <label for="name">Product Name: </label>
                         <input type="text" name="name" id="name" class="form-control" />
-                        <label for="url">URL: </label>
+                        <label for="url" style="margin-top:10px;">URL: </label>
                         <textarea name="url" id="url" class="form-control"></textarea>
+                        <?php
+                            require_once("db.php");
+                            $dropquery = "SELECT userID,useremail FROM Users WHERE usertype = 'Seller'";
+                            $dropresult = $mydb->query($dropquery);
+                        ?>
+                        <select name="seller" id="seller" class="form-control" style="margin-top:10px; margin-bottom:10px;">
+                            <option value="">Select Associated Seller...</option>
+                            <?php
+                                if ($dropresult->num_rows > 0) {
+                                    while ($row = $dropresult->fetch_assoc()) {
+                                        echo '<option value"'.$row['userID'].'">'.$row['userID'].'</option>';
+                                    }
+                                } else {
+                                    echo '<option value="">Sellers not available.</option>';
+                                }
+                            ?>
+                        </select>
                         <input type="submit" name="insert" id="insert" value="Add" class="btn btn-default" style="background: #FDB022; margin-top: 15px;" />
                     </form>
                 </div>
-                <div class="modal-footer">
+                <!-- <div class="modal-footer">
                     <button type="button" class="btn btn-default" style="background: #FDB022;" data-bs-dismiss="modal">Close</button>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
+
+    <?php
+        $error = false;
+        $name = '';
+        $url = '';
+        $seller = '';
+        date_default_timezone_set("America/New_York");
+        $timestamp = date('Y-m-d'); 
+
+        if (isset($_POST["insert"])) {
+            if (isset($_POST["name"])) $name = $_POST["name"];
+            if (isset($_POST["url"])) $url = $_POST["url"];
+            if (isset($_POST["seller"])) $seller = $_POST["seller"];
+                    
+            require_once("db.php");
+                    
+            if (empty($name) || empty($url) || empty($seller)) {
+                $error = true;
+            }
+                    
+            if (!$error) {
+                $query = "  INSERT INTO Listings(listingdate, listingURL, productname, userID) 
+                            VALUES ('$timestamp', '$url', '$name', '$seller')";
+                $result = $mydb->query($query);
+                    
+                header("HTTP/1.1 307 Temporary Redirect");
+                header("Location: Listings.php");
+            }
+        }
+    ?>
+
+    <!-- <script>
+        $(document).ready(function() {
+            $('#insert_form').on("submit", function(event) {
+                event.preventDefault();
+                if ($('#name').val()=='') {
+                    alert("Product name is required.");
+                }
+                else if ($('#url').val()=='') {
+                    alert("Product URL is required.");
+                }
+                else if ($('#seller').val()=='') {
+                    alert("Associated Seller is required.");
+                }
+                else {
+                    $.ajax({
+                        url: "insert.php",
+                        method: "POST",
+                        data: $('#insert_form').serialize(),
+                        beforeSend:function(){
+                            $('#insert').val("Inserting");
+                        },
+                        success:function(data){
+                            $('#insert_form')[0].reset();
+                            $('#add-data-Modal').modal('hide');
+                        }
+                    })
+                }
+            })
+        })
+    </script> -->
 
     <div id="contentArea">
         <?php
@@ -140,9 +230,10 @@
             $result = $mydb->query($query);
 
             while ($row = mysqli_fetch_array($result)) {
-                echo "<form method='post' action='Recalls.php' class='container' style='margin-bottom: 14px;border-style: solid;border-radius: 7px;border-color: #0E1E45;'>
+                echo "<form method='post' action='Listings.php' class='container' style='margin-bottom: 14px;border-style: solid;border-radius: 7px;border-color: #0E1E45;'>
                 <div class='row'>
                     <div class='col-lg-10' style='text-align: left; padding-top: 6px; padding-bottom: 6px;'>
+                        <input type='hidden' name='listingid' value='".$row['listingID']."'/>
                         <p style='margin-bottom: 0px;'><b>Listing ID: </b>".$row['listingID']."</p>
                         <p style='margin-bottom: 0px;'><b>Listing Date: </b>" .$row['listingdate']. "</p>
                         <p style='margin-bottom: 0px;'><b>Product Name: </b>".$row['productname']."</p>
