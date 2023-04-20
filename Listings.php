@@ -24,22 +24,6 @@
             margin-right: auto;
         }
 
-        /* table {
-            margin-top: 30px;
-            margin-bottom: 30px;
-            width: 90%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        table thead {
-            background-color: lightgray;
-        }
-
-        table, tr {
-            border: 1px solid;
-        } */
-
         .logo {
             margin: 10px;
         }
@@ -51,6 +35,15 @@
         .fab:hover {
             color: #FDB022;
             transition: 0.2s;
+        }
+
+        #listurl {
+            display: inline-block;
+            width: 96%;
+            white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: bottom;
         }
     </style>
 
@@ -95,7 +88,7 @@
                         </div>
                     </div>
                     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                        <input type="search" name="search" placeholder="Search listing..." style="margin: 0px;width: 300px;" >
+                        <input type="search" name="search" placeholder="Search listing(s)..." style="margin: 0px;width: 300px;" >
                         <button name="BTNsrch" type="submit" style="background: #FDB022; border-style:none; border-radius: 4px; color: white;"><i class="fas fa-search"></i></button>
                     </form>
                 </div>
@@ -232,12 +225,12 @@
             while ($row = mysqli_fetch_array($result)) {
                 echo "<form method='post' action='Listings.php' class='container' style='margin-bottom: 14px;border-style: solid;border-radius: 7px;border-color: #0E1E45;'>
                 <div class='row'>
-                    <div class='col-lg-10' style='text-align: left; padding-top: 6px; padding-bottom: 6px;'>
+                    <div class='col-lg-10' style='text-align: left; padding-top: 6px; padding-bottom: 6px; overflow-wrap: break-word; word-wrap: break-word;'>
                         <input type='hidden' name='listingid' value='".$row['listingID']."'/>
                         <p style='margin-bottom: 0px;'><b>Listing ID: </b>".$row['listingID']."</p>
                         <p style='margin-bottom: 0px;'><b>Listing Date: </b>" .$row['listingdate']. "</p>
                         <p style='margin-bottom: 0px;'><b>Product Name: </b>".$row['productname']."</p>
-                        <p style='margin-bottom: 0px;'><b>URL: </b><a href='".$row['listingURL']."' target='_blank' rel='noopener noreferrer'>".$row['listingURL']."</a></p>
+                        <p style='margin-bottom: 0px;'><b>URL: </b><a id='listurl' href='".$row['listingURL']."' target='_blank' rel='noopener noreferrer'>".$row['listingURL']."</a></p>
                     </div>
                     <div class='col d-lg-flex justify-content-end align-items-lg-center'>
                         <button class='btn' name='delete' type='submit' style='background: #FDB022'><i class='fas fa-trash'></i></button>

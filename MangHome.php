@@ -46,13 +46,49 @@
                     <div class="col-md-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
                         <div>
                             <h2 class="text-uppercase fw-bold mb-3">Welcome cpsc manager</h2>
-                            <p class="mb-4">CPSC Managers oversee the actions taken by the Investigators so they can keep track of and maintain order of Investigators and Sellers</p><img src="assets/img/manager.png">
+                            <p class="mb-4">CPSC Managers oversee the actions taken by the Investigators so they can keep track of and maintain order of Investigators and Sellers</p>
+                            <!-- <img src="assets/img/manager.png"> -->
                         </div>
                     </div>
                 </div>
             </div>
         </section>
     </div>
+
+    <!-- Manager Home Cards -->
+    <div class="row" align=center style="margin:40px;">
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <img src="assets/img/manager.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Recalled Products</h5>
+                    <p class="card-text">View a list of all current recalled products.</p>
+                    <a href="Recalls.php" class="btn" style="background: #FDB022;">Recalls&nbsp;&nbsp;<i class="fas fa-chevron-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <img src="assets/img/manager.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">View Listings</h5>
+                    <p class="card-text">View a listed view of all the Seller's listings.</p>
+                    <a href="Listings.php" class="btn" style="background: #FDB022;">Listings&nbsp;&nbsp;<i class="fas fa-chevron-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <img src="assets/img/manager.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">View Reports</h5>
+                    <p class="card-text">View reports regarding each recalled product and their listings.</p>
+                    <a href="Reports.php" class="btn" style="background: #FDB022;">Reports&nbsp;&nbsp;<i class="fas fa-chevron-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer class="text-center" style="background: #0E1E45;">
         <div class="container text-muted py-4 py-lg-5">
             <ul class="list-inline text-light">
