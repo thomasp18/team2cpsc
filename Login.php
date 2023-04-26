@@ -1,4 +1,22 @@
 <!DOCTYPE html>
+
+<?php
+    session_start();
+
+    if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) {
+        if (isset($_SESSION["role"])) {
+            if ($_SESSION["role"] == "CPSCManager") {
+                Header("Location: MangHome.php");
+                exit;
+            }
+            else if ($_SESSION["role"] == "CPSCInvestigator") {
+                Header("Location: InvestHome.php");
+                exit;
+            }
+        }
+    }
+?>
+
 <html lang="en">
 
 <head>
@@ -70,6 +88,7 @@
 
             if (!$error) {
                 session_start();
+                $_SESSION['loggedin'] = true;
                 $_SESSION['email'] = $email;
                 $_SESSION['role'] = $row["usertype"];
 

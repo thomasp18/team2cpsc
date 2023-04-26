@@ -25,22 +25,6 @@
             margin-right: auto;
         }
 
-        /* table {
-            margin-top: 30px;
-            margin-bottom: 30px;
-            width: 90%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        table thead {
-            background-color: lightgray;
-        }
-
-        table, tr {
-            border: 1px solid;
-        } */
-
         .logo {
             margin: 10px;
         }
@@ -55,24 +39,17 @@
         }
     </style>
 
-    <script>
-        function showResult(str) {
-            if (str.length==0) {
-                document.getElementById("contentArea").innerHTML="";
-                document.getElementById("contentArea").style.border="0px";
-                return;
+    <?php 
+        if (isset($_POST["delete"])) {
+            if (isset($_POST["recallid"])) {
+                require_once("db.php");
+                $sql = "DELETE FROM Recalls WHERE recallID = ".$_POST['recallid'];
+                $result = $mydb->query($sql);
             }
-            var xmlhttp=new XMLHttpRequest();
-            xmlhttp.onreadystatechange=function() {
-                if (this.readyState==4 && this.status==200) {
-                document.getElementById("contentArea").innerHTML=this.responseText;
-                document.getElementById("contentArea").style.border="1px solid #A5ACB2";
-                }
-            }
-            xmlhttp.open("GET","utilities2.php?q="+str,true);
-            xmlhttp.send();
-            }
-    </script>
+        }
+        $search = "";
+    ?>
+
 </head>
 
 <body style="height: 650px;text-align: center;background: white;">
@@ -115,67 +92,86 @@
         <h2 style="margin-top: 30px; color: #0E1E45;">Recalls</h2>
     </caption>
 
-    <!-- ADD BUTTON and MODAL
-    <div class='col-lg-10' style="text-align: right; margin-bottom:20px;">
-        <button id="addBTN" class="btn" type="button" style="background: #FDB022;"><i class="fas fa-plus-circle"></i></button>
-    </div>
-
-    <div id="addModal" class="modal">
-        <div class="modal-content animate-top">
-            <div class="modal-header">
-                <h5 class="modal-title">Add Recall</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">X</span>
-                </button>
-            </div>
-            <form method="post" id="addFrm">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="prodName">Product Name:</label>
-                        <input type="text" name="prodName" id="prodName" class="form-control" placeholder="Enter a product name." required="">
-                    </div>
-                    <div class="form-group">
-                        <label for="hazDesc">Hazard Description:</label>
-                        <input type="text" name="hazDesc" id="hazDesc" class="form-control" placeholder="Enter a hazard description for the product." required="">
-                    </div>
-                    <div class="form-group">
-                        <label for="url">URL:</label>
-                        <input type="text" name="url" id="url" class="form-control" placeholder="Enter the product's URL." required="">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn" type="button" style="background: #FDB022; color: black;">Add</button>
-                </div>
-            </form>
+    <div class="container" style="width: auto;">
+        <div align="right" style="margin-bottom: 20px;">
+            <button type="button" class="btn" name="add" id="add" data-bs-toggle="modal" data-bs-target="#add_data_Modal" style="background: #FDB022;">
+                <i class="fas fa-plus-circle"></i>
+            </button>
         </div>
     </div>
 
-    <script>
-        var addmodal = $('#addModal');
-        var editmodal = $('#editModal');
-        var addbtn = $("#addBTN");
-        var editbtn = $("#editBTN");
-        var span = $(".close");
-        $(document).ready(function(){
-            addbtn.on('click', function() {
-                addmodal.show();
-            });
-            span.on('click', function() {
-                addmodal.hide();
-                editmodal.hide();
-            });
-            editbtn.on('click', function() {
-                editmodal.show();
-            });
+    <div id="add_data_Modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Recall</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" id="insert_form">
+                        <label for="recallnum">Recall Number: </label>
+                        <input type="text" name="recallnum" id="recallnum" class="form-control" placeholder="23-080"/>
+                        <label for="heading">Recall Heading: </label>
+                        <input type="text" name="heading" id="heading" class="form-control" />
+                        <label for="desc">Recall Description: </label>
+                        <input type="text" name="desc" id="desc" class="form-control" />
+                        <label for="hazard">Hazard Description: </label>
+                        <input type="text" name="hazard" id="hazard" class="form-control" />
+                        <select name="remtype" id="remtype" class="form-control" style="margin-top:10px;">
+                            <option value="">Select Remedy Type...</option>
+                            <option value="Refund">Refund</option>
+                            <option value="Replace">Replace</option>
+                            <option value="Repair">Repair</option>
+                            <option value="New Instructions">New Instructions</option>
+                        </select>
+                        <label for="remedy" style="margin-top:10px;">Remedy: </label>
+                        <textarea name="remedy" id="remedy" class="form-control"></textarea>
+                        <label for="affectedunits">Affected Units: </label>
+                        <input type="number" name="affectedunits" id="affectedunits" class="form-control" placeholder="0"/>
+                        <input type="submit" name="insert" id="insert" value="Add" class="btn btn-default" style="background: #FDB022; margin-top: 15px;" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        });
-        $('body').bind('click', function(e) {
-            if($(e.target).hasClass("modal")) {
-                addmodal.hide();
-                editmodal.hide();
+    <?php
+        $error = false;
+        $recallnum = '';
+        $heading = '';
+        $desc = '';
+        $hazard = '';
+        $remtype = '';
+        $remedy = '';
+        $affunits = '';
+        date_default_timezone_set("America/New_York");
+        $timestamp = date('Y-m-d'); 
+
+        if (isset($_POST["insert"])) {
+            if (isset($_POST["recallnum"])) $recallnum = $_POST["recallnum"];
+            if (isset($_POST["heading"])) $heading = $_POST["heading"];
+            if (isset($_POST["desc"])) $desc = $_POST["desc"];
+            if (isset($_POST["hazard"])) $hazard = $_POST["hazard"];
+            if (isset($_POST["remtype"])) $remtype = $_POST["remtype"];
+            if (isset($_POST["remedy"])) $remedy = $_POST["remedy"];
+            if (isset($_POST["affectedunits"])) $affunits = $_POST["affectedunits"];
+                    
+            require_once("db.php");
+                    
+            if (empty($recallnum) || empty($heading) || empty($desc) || empty($hazard) || empty($remtype) || empty($remedy) || empty($affunits)) {
+                $error = true;
             }
-        });
-    </script> -->
+                    
+            if (!$error) {
+                $query = "  INSERT INTO Recalls(recallnumber, recalldate, recallheading, recalldesc, hazarddesc, remedytype, remedydesc, affectedunits, userID) 
+                            VALUES ('$recallnum', '$timestamp', '$heading', '$desc', '$hazard', '$remtype', '$remedy', $affunits, 1)";
+                $result = $mydb->query($query);
+                
+                header("HTTP/1.1 307 Temporary Redirect");
+                header("Location: Recalls.php");
+            }
+        }
+    ?>
 
     <div id="contentArea">
         <?php
@@ -183,33 +179,41 @@
             require_once("db.php");
             if (isset($_POST["BTNsrch"]))  {
                 if (isset($_POST["search"])) $search = $_POST["search"];
-                $query = "  SELECT * FROM Violations v
-                            JOIN Listings l ON
-                            v.listingID = l.listingID
-                            JOIN Recalls r ON
-                            v.recallID = r.recallID
-                            WHERE l.productname LIKE '%$search%'";
+                // $query = "  SELECT * FROM Violations v
+                //             JOIN Listings l ON
+                //             v.listingID = l.listingID
+                //             JOIN Recalls r ON
+                //             v.recallID = r.recallID
+                //             WHERE l.productname LIKE '%$search%'";
+                $query = "  SELECT * FROM Recalls
+                            WHERE recallheading LIKE '%$search%'";
             } else {
-                $query = "  SELECT * FROM Violations v
-                            JOIN Listings l ON
-                            v.listingID = l.listingID
-                            JOIN Recalls r ON
-                            v.recallID = r.recallID";
+                // $query = "  SELECT * FROM Violations v
+                //             JOIN Listings l ON
+                //             v.listingID = l.listingID
+                //             JOIN Recalls r ON
+                //             v.recallID = r.recallID";
+                $query = "  SELECT * FROM Recalls";
             }
             $result = $mydb->query($query);
 
             while ($row = mysqli_fetch_array($result)) {
                 echo "<form method='post' action='Recalls.php' class='container' style='margin-bottom: 14px;border-style: solid;border-radius: 7px;border-color: #0E1E45;'>
-                <div class='row'>
-                    <div style='text-align: left; padding-top: 6px; padding-bottom: 6px;'>
-                        <p style='margin-bottom: 0px;'><b>Recall ID: </b>".$row['recallID']."</p>
-                        <p style='margin-bottom: 0px;'><b>Recall Date: </b>" .$row['recalldate']. "</p>
-                        <p style='margin-bottom: 0px;'><b>Product Name: </b>".$row['productname']."</p>
-                        <p style='margin-bottom: 0px;'><b>Hazard Description: </b>".$row['hazarddesc']."</p>
-                        <p style='margin-bottom: 0px;'><b>Remedy Type: </b>".$row['remedytype']."</p>
-                        <p style='margin-bottom: 0px;'><b>Remedy: </b>".$row['remedydesc']."</p>
+                    <div class='row'>
+                        <div class='col-lg-11' style='text-align: left; padding-top: 6px; padding-bottom: 6px;'>
+                            <input type='hidden' name='recallid' value='".$row['recallID']."'/>
+                            <p style='margin-bottom: 0px;'><b>Recall ID: </b>".$row['recallID']."</p>
+                            <p style='margin-bottom: 0px;'><b>Recall Date: </b>" .$row['recalldate']. "</p>
+                            <p style='margin-bottom: 0px;'><b>Recall Heading: </b>".$row['recallheading']."</p>
+                            <p style='margin-bottom: 0px;'><b>Hazard Description: </b>".$row['hazarddesc']."</p>
+                            <p style='margin-bottom: 0px;'><b>Remedy Type: </b>".$row['remedytype']."</p>
+                            <p style='margin-bottom: 0px;'><b>Remedy: </b>".$row['remedydesc']."</p>
+                            <p style='margin-bottom: 0px;'><b>Affected Units: </b>".$row['affectedunits']."</p>
+                        </div>
+                        <div class='col d-lg-flex justify-content-end align-items-lg-center'>
+                            <button class='btn' name='delete' type='submit' style='background: #FDB022'><i class='fas fa-trash'></i></button>
+                        </div>
                     </div>
-                </div>
                 </form>";
             }
         ?>

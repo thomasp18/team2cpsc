@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&amp;display=swap">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
     <!-- <link rel="stylesheet" href="assets/css/RecallsStyles.css"> -->
     <script src="jquery-3.1.1.min.js"></script>
 
@@ -39,7 +40,7 @@
 
         #listurl {
             display: inline-block;
-            width: 96%;
+            width: 95%;
             white-space: nowrap; 
             overflow: hidden;
             text-overflow: ellipsis;
@@ -83,7 +84,7 @@
                         <div class="col-md-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
                             <div>
                                 <h1 class="text-uppercase fw-bold text-white mb-3">Listed Products</h1>
-                                <p class="mb-4">Look through our table of seller listings.</p>
+                                <p class="mb-4">View listings that are found in violation of existing recalls.</p>
                             </div>
                         </div>
                     </div>
@@ -127,7 +128,7 @@
                             $dropresult = $mydb->query($dropquery);
                         ?>
                         <select name="seller" id="seller" class="form-control" style="margin-top:10px; margin-bottom:10px;">
-                            <option value="">Select Associated Seller...</option>
+                            <option value="">Select Associated Seller by ID...</option>
                             <?php
                                 if ($dropresult->num_rows > 0) {
                                     while ($row = $dropresult->fetch_assoc()) {
@@ -218,24 +219,29 @@
                 $query = "  SELECT * FROM Listings
                             WHERE productname LIKE '%$search%'";
             } else {
-                $query = "  SELECT * FROM Listings";
+                $query = "  SELECT * FROM Listings ORDER BY listingpriority DESC";
             }
             $result = $mydb->query($query);
 
             while ($row = mysqli_fetch_array($result)) {
                 echo "<form method='post' action='Listings.php' class='container' style='margin-bottom: 14px;border-style: solid;border-radius: 7px;border-color: #0E1E45;'>
-                <div class='row'>
-                    <div class='col-lg-10' style='text-align: left; padding-top: 6px; padding-bottom: 6px; overflow-wrap: break-word; word-wrap: break-word;'>
-                        <input type='hidden' name='listingid' value='".$row['listingID']."'/>
-                        <p style='margin-bottom: 0px;'><b>Listing ID: </b>".$row['listingID']."</p>
-                        <p style='margin-bottom: 0px;'><b>Listing Date: </b>" .$row['listingdate']. "</p>
-                        <p style='margin-bottom: 0px;'><b>Product Name: </b>".$row['productname']."</p>
-                        <p style='margin-bottom: 0px;'><b>URL: </b><a id='listurl' href='".$row['listingURL']."' target='_blank' rel='noopener noreferrer'>".$row['listingURL']."</a></p>
+                    <div class='row'>
+                        <div class='col-lg-9' style='text-align: left; padding-top: 6px; padding-bottom: 6px; overflow-wrap: break-word; word-wrap: break-word;'>
+                            <input type='hidden' name='listingid' value='".$row['listingID']."'/>
+                            <p style='margin-bottom: 0px;'><b>Listing ID: </b>".$row['listingID']."</p>
+                            <p style='margin-bottom: 0px;'><b>Listing Date: </b>" .$row['listingdate']. "</p>
+                            <p style='margin-bottom: 0px;'><b>Product Name: </b>".$row['productname']."</p>
+                            <p style='margin-bottom: 0px;'><b>URL: </b><a id='listurl' href='".$row['listingURL']."' target='_blank' rel='noopener noreferrer'>".$row['listingURL']."</a></p>
+                        </div>
+                        <div class='col d-lg-flex justify-content-center align-items-lg-center'>
+                            <label for='priority'>Priority?
+                                <input type='checkbox' id='priority' name='priority' <?php if (".$row['listingpriority']." == 1) echo checked='checked'; ?>
+                            </label>
+                        </div>
+                        <div class='col d-lg-flex justify-content-end align-items-lg-center'>
+                            <button class='btn' name='delete' type='submit' style='background: #FDB022'><i class='fas fa-trash'></i></button>
+                        </div>
                     </div>
-                    <div class='col d-lg-flex justify-content-end align-items-lg-center'>
-                        <button class='btn' name='delete' type='submit' style='background: #FDB022'><i class='fas fa-trash'></i></button>
-                    </div>
-                </div>
                 </form>";
             }
         ?>

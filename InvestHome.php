@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+
+<?php
+    session_start();
+?>
+
 <html lang="en">
 
 <head>
@@ -25,7 +30,7 @@
         }
     </style>
 
-    <?php
+    <!-- <?php
         session_start();
         if (isset($_SESSION['role'])) {
             if ($_SESSION['role'] != "CPSCManager") {
@@ -34,7 +39,7 @@
                 <?php
             }
         }
-    ?>
+    ?> -->
 
 </head>
 
