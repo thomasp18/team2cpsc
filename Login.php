@@ -75,6 +75,7 @@
                 $_SESSION['loggedin'] = true;
                 $_SESSION['email'] = $email;
                 $_SESSION['role'] = $row["usertype"];
+                $_SESSION['username'] = $row["lastname"];
 
                 if (isset($row["usertype"]) && $row["usertype"] != null) {
                     $type = $row["usertype"];

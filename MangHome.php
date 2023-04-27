@@ -37,7 +37,7 @@
                 <div class="row h-100">
                     <div class="col-md-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
                         <div>
-                            <h2 class="text-uppercase fw-bold mb-3">Welcome cpsc manager</h2>
+                            <h2 class="text-uppercase fw-bold mb-3">Welcome cpsc manager <?php if(isset($_SESSION['username'])) echo("{$_SESSION['username']}"); ?> </h2>
                             <p class="mb-4">CPSC Managers oversee the actions taken by the Investigators so they can keep track of and maintain order of Investigators and Sellers</p>
                             <!-- <img src="assets/img/manager.png"> -->
                         </div>

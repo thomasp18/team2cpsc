@@ -38,7 +38,7 @@
                 <div class="row h-100">
                     <div class="col-md-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
                         <div>
-                            <h2 class="text-uppercase fw-bold mb-3">welcome cpsc investigator</h2>
+                            <h2 class="text-uppercase fw-bold mb-3">welcome cpsc investigator <?php if(isset($_SESSION['username'])) echo("{$_SESSION['username']}"); ?> </h2>
                             <p class="mb-4">Investigators input recalled items into their appropriate tab, they input the necessary information and keep track of these products.</p>
                             <!-- <img src="assets/img/investigator.jpg"> -->
                         </div>

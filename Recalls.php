@@ -196,6 +196,7 @@
                                 <div class='recall-info'>
                                     <input type='hidden' name='recallid' value='".$row['recallID']."'/>
                                     <p style='margin-bottom: 0px;'><b>Recall ID: </b>".$row['recallID']."</p>
+                                    <p style='margin-bottom: 0px;'><b>Recall Number: </b>".$row['recallnumber']."</p>
                                     <p style='margin-bottom: 0px;'><b>Recall Date: </b>" .$row['recalldate']. "</p>
                                     <p style='margin-bottom: 0px;'><b>Recall Heading: </b>".$row['recallheading']."</p>
                                     <p style='margin-bottom: 0px;'><b>Hazard Description: </b>".$row['hazarddesc']."</p>
