@@ -13,26 +13,12 @@
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/css/CPSC-Nav.css">
-
-    <style>
-        .logo {
-            margin: 10px;
-        }
-
-        .fab {
-            color: white;
-        }
-
-        .fab:hover {
-            color: #FDB022;
-            transition: 0.2s;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <nav class="navbar navbar-light navbar-expand-md" style="background: #EEEEEE;">
-        <div class="container-fluid"><a href="<?php echo $_SERVER['PHP_SELF']; ?>"><img src="Images/CPSClogo.png" alt="CPSC logo" width="80" class="logo"></a><i class="fas fa-flag text-dark"></i>
+        <div class="container-fluid"><a href="<?php if (isset($_SESSION["role"])) {if ($_SESSION["role"] == "CPSCManager") {echo "MangHome.php";} if ($_SESSION["role"] == "CPSCInvestigator") {echo "InvestHome.php";}}  ?>"><img src="Images/CPSClogo.png" alt="CPSC logo" width="80" class="logo"></a><i class="fas fa-flag text-dark"></i>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="Recalls.php">Recalled Products</a></li>
@@ -80,8 +66,8 @@
                         <?php
                     }
                 ?>
-                <iframe id="mang" title="Report Section" width="1280" height="800" src="https://app.powerbi.com/view?r=eyJrIjoiMmFjYjNiZWEtM2Q2Mi00ZWMwLWI3OGQtOTQ2ZGM4MTY2MjJiIiwidCI6IjYwOTU2ODg0LTEwYWQtNDBmYS04NjNkLTRmMzJjMWUzYTM3YSIsImMiOjF9" frameborder="0" allowFullScreen="true"></iframe>
-                <iframe id="invest" title="Sprint3_Investigator_BusinessAnalystV14 (1)" width="1280" height="800" src="https://app.powerbi.com/view?r=eyJrIjoiMWZmZmZmZTEtZGE1MS00YTQxLThlY2ItZWJmNzJiNTEyOWNkIiwidCI6IjYwOTU2ODg0LTEwYWQtNDBmYS04NjNkLTRmMzJjMWUzYTM3YSIsImMiOjF9" frameborder="0" allowFullScreen="true"></iframe>
+                <iframe id="mang" title="Report Section" width="1280" height="800" src="https://app.powerbi.com/view?r=eyJrIjoiMmQwMDAwZmQtMGEzOS00NmI5LThmNjAtN2U0MWQ0NmNhNWYzIiwidCI6IjYwOTU2ODg0LTEwYWQtNDBmYS04NjNkLTRmMzJjMWUzYTM3YSIsImMiOjF9" frameborder="0" allowFullScreen="true"></iframe>
+                <iframe id="invest" title="Report Section" width="1280" height="800" src="https://app.powerbi.com/view?r=eyJrIjoiZGE4NGQ4YWYtMzYyNS00MTU1LWJhODItMzdhYzkxNTkyZjliIiwidCI6IjYwOTU2ODg0LTEwYWQtNDBmYS04NjNkLTRmMzJjMWUzYTM3YSIsImMiOjF9" frameborder="0" allowFullScreen="true"></iframe>
             </div>
         </section>
     </div>

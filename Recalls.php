@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- Disable Investigator ability to delete a recall(s). -->
+<!-- <?php
+    session_start();
+    if (isset($_SESSION["role"]) && $_SESSION["role"] == "CPSCInvestigator") {
+    ?>
+    <style type="text/css">
+        .recallDEL{
+            display:none;
+        }
+    </style>
+    <?php
+    }
+?> -->
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -9,35 +23,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&amp;display=swap">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <!-- <link rel="stylesheet" href="assets/css/RecallsStyles.css"> -->
+    <link rel="stylesheet" href="styles.css">
     <script src="jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="script.js"></script>
-
-    <style>
-        #wrapper {
-            max-width: 991px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .btn {
-            max-width: 991px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .logo {
-            margin: 10px;
-        }
-
-        .fab {
-            color: white;
-        }
-
-        .fab:hover {
-            color: #FDB022;
-            transition: 0.2s;
-        }
-    </style>
 
     <?php 
         if (isset($_POST["delete"])) {
@@ -54,7 +42,7 @@
 
 <body style="height: 650px;text-align: center;background: white;">
     <nav class="navbar navbar-light navbar-expand-md" style="background: #EEEEEE;">
-        <div class="container-fluid"><a href="<?php echo $_SERVER['PHP_SELF']; ?>"><img src="Images/CPSClogo.png" alt="CPSC logo" width="80" class="logo"></a><i class="fas fa-flag text-dark"></i>
+        <div class="container-fluid"><a href="<?php if (isset($_SESSION["role"])) {if ($_SESSION["role"] == "CPSCManager") {echo "MangHome.php";} if ($_SESSION["role"] == "CPSCInvestigator") {echo "InvestHome.php";}}  ?>"><img src="Images/CPSClogo.png" alt="CPSC logo" width="80" class="logo"></a><i class="fas fa-flag text-dark"></i>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link active" href="<?php echo $_SERVER['PHP_SELF']; ?>">Recalled Products</a></li>
@@ -100,6 +88,7 @@
         </div>
     </div>
 
+    <!-- ADD MODAL -->
     <div id="add_data_Modal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -172,6 +161,7 @@
             }
         }
     ?>
+    <!-- ADD MODAL -->
 
     <div id="contentArea">
         <?php
@@ -198,7 +188,33 @@
             $result = $mydb->query($query);
 
             while ($row = mysqli_fetch_array($result)) {
-                echo "<form method='post' action='Recalls.php' class='container' style='margin-bottom: 14px;border-style: solid;border-radius: 7px;border-color: #0E1E45;'>
+                echo "<form method='post' action='Recalls.php' class='container'>
+                    <div class='list-container'>
+                        <div class='re-col'>
+                            <div class='recallItem'>
+                                <div class='recall-info'>
+                                    <input type='hidden' name='recallid' value='".$row['recallID']."'/>
+                                    <p style='margin-bottom: 0px;'><b>Recall ID: </b>".$row['recallID']."</p>
+                                    <p style='margin-bottom: 0px;'><b>Recall Date: </b>" .$row['recalldate']. "</p>
+                                    <p style='margin-bottom: 0px;'><b>Recall Heading: </b>".$row['recallheading']."</p>
+                                    <p style='margin-bottom: 0px;'><b>Hazard Description: </b>".$row['hazarddesc']."</p>
+                                    <p style='margin-bottom: 0px;'><b>Remedy Type: </b>".$row['remedytype']."</p>
+                                    <p style='margin-bottom: 0px;'><b>Remedy: </b>".$row['remedydesc']."</p>
+                                    <p style='margin-bottom: 0px;'><b>Affected Units: </b>".$row['affectedunits']."</p>
+                                    <div class='recallDEL' align='center'>
+                                        <button class='btn' name='delete' type='submit' style='background: #FDB022'><i class='fas fa-trash'></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>";
+            }
+        ?>
+    </div>
+
+    <!-- Temporary location for olf form -->
+                <!-- <form method='post' action='Recalls.php' class='container' style='margin-bottom: 14px;border-style: solid;border-radius: 7px;border-color: #0E1E45;'>
                     <div class='row'>
                         <div class='col-lg-11' style='text-align: left; padding-top: 6px; padding-bottom: 6px;'>
                             <input type='hidden' name='recallid' value='".$row['recallID']."'/>
@@ -214,10 +230,7 @@
                             <button class='btn' name='delete' type='submit' style='background: #FDB022'><i class='fas fa-trash'></i></button>
                         </div>
                     </div>
-                </form>";
-            }
-        ?>
-    </div>
+                </form> -->
 
     <footer class="text-center" style="background: #0E1E45;">
         <div class="container text-muted py-4 py-lg-5">

@@ -1,0 +1,120 @@
+#wrapper {
+    max-width: 991px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn {
+    max-width: 991px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.logo {
+    margin: 10px;
+}
+
+.fab {
+    color: white;
+}
+
+.fab:hover {
+    color: #FDB022;
+    transition: 0.2s;
+}
+
+.error {
+    color: red;
+}
+
+
+/* LISTINGS CSS */
+/* #listurl {
+    display: inline-block;
+    width: 96%;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
+} */
+
+.list-container {
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.left-col {
+    flex-basis: 100%;
+}
+
+.listingItem {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 30px 0;
+    border-top: 1px solid #ccc;
+}
+
+.listing-img {
+    flex-basis: 20%;
+    position: relative;
+    /* border: 1px;
+    border-style: solid; */
+}
+
+.listing-info {
+    flex-basis: 77%;
+    color: #555;
+    text-align: left;
+    /* border: 1px;
+    border-style: solid; */
+    position: relative;
+}
+
+.listing-info button {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+}
+
+.listing-img img {
+    width: 100%;
+    border-radius: 12px;
+}
+
+.listing-img a {
+    position: absolute;
+    right: 0px;
+}
+
+.listing-info h3 {
+    font-weight: 600;
+    color: #333;
+    font-size: 22px;
+    margin: 4px 0;
+}
+/* LISTING CSS */
+
+/* RECALLS CSS */
+.re-col {
+    flex-basis: 100%;
+}
+
+.recall-info {
+    flex-basis: 100%;
+    color: #555;
+    text-align: left;
+    /* border: 1px;
+    border-style: solid; */
+}
+
+.recallItem {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 30px 0;
+    border-top: 1px solid #ccc;
+}
+/* RECALLS CSS */

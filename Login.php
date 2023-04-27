@@ -28,25 +28,9 @@
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
     <!-- <link rel="stylesheet" href="assets/css/LoginStyles.css"> -->
+    <link rel="stylesheet" href="styles.css">
 
     <style>
-        .error {
-            color: red;
-        }
-
-        .logo {
-            margin: 10px;
-        }
-
-        .fab {
-            color: white;
-        }
-
-        .fab:hover {
-            color: #FDB022;
-            transition: 0.2s;
-        }
-
         footer {
             margin-top: 11px;
         }

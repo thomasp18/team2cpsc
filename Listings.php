@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- Disable Investigator ability to delete a listing(s). -->
+<!-- <?php
+    session_start();
+    if (isset($_SESSION["role"]) && $_SESSION["role"] == "CPSCInvestigator") {
+    ?>
+    <style type="text/css">
+        #delBTN{
+            display:none;
+        }
+    </style>
+    <?php
+    }
+?> -->
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -10,43 +24,8 @@
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
     <!-- <link rel="stylesheet" href="assets/css/RecallsStyles.css"> -->
+    <link rel="stylesheet" href="styles.css">
     <script src="jquery-3.1.1.min.js"></script>
-
-    <style>
-        #wrapper {
-            max-width: 991px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .btn {
-            max-width: 991px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .logo {
-            margin: 10px;
-        }
-
-        .fab {
-            color: white;
-        }
-
-        .fab:hover {
-            color: #FDB022;
-            transition: 0.2s;
-        }
-
-        #listurl {
-            display: inline-block;
-            width: 96%;
-            white-space: nowrap; 
-            overflow: hidden;
-            text-overflow: ellipsis;
-            vertical-align: bottom;
-        }
-    </style>
 
     <?php 
         if (isset($_POST["delete"])) {
@@ -63,7 +42,7 @@
 
 <body style="height: 650px;text-align: center;background: white;">
     <nav class="navbar navbar-light navbar-expand-md" style="background: #EEEEEE;">
-        <div class="container-fluid"><a href="<?php echo $_SERVER['PHP_SELF']; ?>"><img src="Images/CPSClogo.png" alt="CPSC logo" width="80" class="logo"></a><i class="fas fa-flag text-dark"></i>
+        <div class="container-fluid"><a href="<?php if (isset($_SESSION["role"])) {if ($_SESSION["role"] == "CPSCManager") {echo "MangHome.php";} if ($_SESSION["role"] == "CPSCInvestigator") {echo "InvestHome.php";}}  ?>"><img src="Images/CPSClogo.png" alt="CPSC logo" width="80" class="logo"></a><i class="fas fa-flag text-dark"></i>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="Recalls.php">Recalled Products</a></li>
@@ -120,8 +99,11 @@
                     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" id="insert_form">
                         <label for="name">Product Name: </label>
                         <input type="text" name="name" id="name" class="form-control" />
-                        <label for="url" style="margin-top:10px;">URL: </label>
-                        <textarea name="url" id="url" class="form-control"></textarea>
+                        <label for="listingurl" style="margin-top:10px;">Listing URL: </label>
+                        <textarea name="listingurl" id="listingurl" class="form-control"></textarea>
+                        
+                        <label for="imgurl">Image URL: </label>
+                        <textarea name="imgurl" id="imgurl" class="form-control"></textarea>
                         <?php
                             require_once("db.php");
                             $dropquery = "SELECT userID,useremail FROM Users WHERE usertype = 'Seller'";
@@ -139,38 +121,47 @@
                                 }
                             ?>
                         </select>
+                        <select name="priority" id="priority" class="form-control" style="margin-top:10px; margin-bottom:10px;">
+                            <option value="">Prioritize listing? (0 = no, 1 = yes)</option>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                        </select>
                         <input type="submit" name="insert" id="insert" value="Add" class="btn btn-default" style="background: #FDB022; margin-top: 15px;" />
                     </form>
                 </div>
-                <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-default" style="background: #FDB022;" data-bs-dismiss="modal">Close</button>
-                </div> -->
             </div>
         </div>
     </div>
 
     <?php
         $error = false;
+        
+        $listingurl = '';
+        $priority = '';
+        $imgurl = '';
         $name = '';
-        $url = '';
+        $recallurl = 'https://www.cpsc.gov/Recalls/';
         $seller = '';
+        
         date_default_timezone_set("America/New_York");
         $timestamp = date('Y-m-d'); 
 
         if (isset($_POST["insert"])) {
+            if (isset($_POST["listingurl"])) $listingurl = $_POST["listingurl"];
+            if (isset($_POST["priority"])) $priority = $_POST["priority"];
+            if (isset($_POST["imgurl"])) $imgurl = $_POST["imgurl"];
             if (isset($_POST["name"])) $name = $_POST["name"];
-            if (isset($_POST["url"])) $url = $_POST["url"];
             if (isset($_POST["seller"])) $seller = $_POST["seller"];
                     
             require_once("db.php");
                     
-            if (empty($name) || empty($url) || empty($seller)) {
+            if (empty($listingurl) || empty($priority) || empty($imgurl) || empty($name) || empty($seller)) {
                 $error = true;
             }
                     
             if (!$error) {
-                $query = "  INSERT INTO Listings(listingdate, listingURL, productname, userID) 
-                            VALUES ('$timestamp', '$url', '$name', '$seller')";
+                $query = "  INSERT INTO Listings(listingdate, listingURL, listingpriority, listingimg, productname, recallURL, userID) 
+                            VALUES ('$timestamp', '$listingurl', '$priority', '$imgurl', '$name', '$recallurl', '$seller')";
                 $result = $mydb->query($query);
                     
                 header("HTTP/1.1 307 Temporary Redirect");
@@ -178,37 +169,6 @@
             }
         }
     ?>
-
-    <!-- <script>
-        $(document).ready(function() {
-            $('#insert_form').on("submit", function(event) {
-                event.preventDefault();
-                if ($('#name').val()=='') {
-                    alert("Product name is required.");
-                }
-                else if ($('#url').val()=='') {
-                    alert("Product URL is required.");
-                }
-                else if ($('#seller').val()=='') {
-                    alert("Associated Seller is required.");
-                }
-                else {
-                    $.ajax({
-                        url: "insert.php",
-                        method: "POST",
-                        data: $('#insert_form').serialize(),
-                        beforeSend:function(){
-                            $('#insert').val("Inserting");
-                        },
-                        success:function(data){
-                            $('#insert_form')[0].reset();
-                            $('#add-data-Modal').modal('hide');
-                        }
-                    })
-                }
-            })
-        })
-    </script> -->
 
     <div id="contentArea">
         <?php
@@ -224,7 +184,31 @@
             $result = $mydb->query($query);
 
             while ($row = mysqli_fetch_array($result)) {
-                echo "<form method='post' action='Listings.php' class='container' style='margin-bottom: 14px;border-style: solid;border-radius: 7px;border-color: #0E1E45;'>
+                echo "<form method='post' action='Listings.php' class='container'>
+                    <div class='list-container'>
+                        <div class='left-col'>
+                            <div class='listingItem'>
+                                <div class='listing-img'>
+                                    <img src='".$row['listingimg']."'>
+                                    <a class='btn' style='background: #FDB022' href='".$row['listingURL']."' target='_blank' rel='noopener noreferrer'><i class='bi bi-box-arrow-up-right'></i></a>
+                                </div>
+                                <div class='listing-info'>
+                                    <h3>".$row['productname']."</h3>
+                                    <input type='hidden' name='listingid' value='".$row['listingID']."'/>
+                                    <p><b>Listing ID: </b>".$row['listingID']."</p>
+                                    <p><b>Listing Date: </b>" .$row['listingdate']. "</p>
+                                    <button id='delBTN' class='btn' name='delete' type='submit' style='background: #FDB022'><i class='fas fa-trash'></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>";
+            }
+        ?>
+    </div>
+
+    <!-- Temporary location for old form -->
+                <!-- <form method='post' action='Listings.php' class='container' style='margin-bottom: 14px;border-style: solid;border-radius: 7px;border-color: #0E1E45;'>
                     <div class='row'>
                         <div class='col-lg-11' style='text-align: left; padding-top: 6px; padding-bottom: 6px; overflow-wrap: break-word; word-wrap: break-word;'>
                             <input type='hidden' name='listingid' value='".$row['listingID']."'/>
@@ -237,10 +221,7 @@
                             <button class='btn' name='delete' type='submit' style='background: #FDB022'><i class='fas fa-trash'></i></button>
                         </div>
                     </div>
-                </form>";
-            }
-        ?>
-    </div>
+                </form> -->
 
     <footer class="text-center" style="background: #0E1E45;">
         <div class="container text-muted py-4 py-lg-5">

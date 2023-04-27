@@ -8,21 +8,7 @@
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/css/CPSC-Nav.css">
-
-    <style>
-        .logo {
-            margin: 10px;
-        }
-
-        .fab {
-            color: white;
-        }
-
-        .fab:hover {
-            color: #FDB022;
-            transition: 0.2s;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>

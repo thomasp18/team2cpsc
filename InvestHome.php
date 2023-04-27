@@ -14,33 +14,7 @@
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/css/CPSC-Nav.css">
     <script src="jquery-3.1.1.min.js"></script>
-
-    <style>
-        .logo {
-            margin: 10px;
-        }
-
-        .fab {
-            color: white;
-        }
-
-        .fab:hover {
-            color: #FDB022;
-            transition: 0.2s;
-        }
-    </style>
-
-    <!-- <?php
-        session_start();
-        if (isset($_SESSION['role'])) {
-            if ($_SESSION['role'] != "CPSCManager") {
-                ?>
-                <script type="text/javascript">document.getElementById('sell').style.display = 'none';</script>
-                <?php
-            }
-        }
-    ?> -->
-
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -52,7 +26,7 @@
                     <li class="nav-item"><a class="nav-link" href="Listings.php">Listings</a></li>
                     <li class="nav-item"><a class="nav-link" href="Reports.php">Reports</a></li>
                     <!-- <li class="nav-item"><a class="nav-link" href="SellerLetters.php" id="sell">Seller Letters</a></li> -->
-                    <li class="nav-item"><a href="Login.php"><button class="btn" type="button" style="text-align: center;margin-right: 15px; background: #FDB022; color: white; margin-left: 5px;">Log Out</button></a></li>
+                    <li class="nav-item"><a href="logout.php"><button class="btn" type="button" style="text-align: center;margin-right: 15px; background: #FDB022; color: white; margin-left: 5px;">Log Out</button></a></li>
                 </ul>
             </div>
         </div>
