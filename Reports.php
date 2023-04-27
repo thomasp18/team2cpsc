@@ -48,16 +48,7 @@
             </div>
             <div class="text-center">
                 <?php
-                    if (isset($_SESSION["role"]) && $_SESSION["role"] == "CPSCManager") {
-                        ?>
-                        <style type="text/css">
-                            #invest{
-                                display:none;
-                            }
-                        </style>
-                        <?php
-                    }
-                    else if (isset($_SESSION["role"]) && $_SESSION["role"] == "CPSCInvestigator") {
+                    if (isset($_SESSION["role"]) && $_SESSION["role"] == "CPSCInvestigator") {
                         ?>
                         <style type="text/css">
                             #mang{
