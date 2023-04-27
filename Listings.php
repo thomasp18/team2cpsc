@@ -84,7 +84,7 @@
                         <div class="col-md-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
                             <div>
                                 <h1 class="text-uppercase fw-bold text-white mb-3">Listed Products</h1>
-                                <p class="mb-4">View listings that are found in violation of existing recalls.</p>
+                                <p class="mb-4">View listings that are under investigation for a potential violation of an existing recall.</p>
                             </div>
                         </div>
                     </div>
