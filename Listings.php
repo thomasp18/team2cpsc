@@ -40,7 +40,7 @@
 
         #listurl {
             display: inline-block;
-            width: 95%;
+            width: 96%;
             white-space: nowrap; 
             overflow: hidden;
             text-overflow: ellipsis;
@@ -226,17 +226,12 @@
             while ($row = mysqli_fetch_array($result)) {
                 echo "<form method='post' action='Listings.php' class='container' style='margin-bottom: 14px;border-style: solid;border-radius: 7px;border-color: #0E1E45;'>
                     <div class='row'>
-                        <div class='col-lg-9' style='text-align: left; padding-top: 6px; padding-bottom: 6px; overflow-wrap: break-word; word-wrap: break-word;'>
+                        <div class='col-lg-11' style='text-align: left; padding-top: 6px; padding-bottom: 6px; overflow-wrap: break-word; word-wrap: break-word;'>
                             <input type='hidden' name='listingid' value='".$row['listingID']."'/>
                             <p style='margin-bottom: 0px;'><b>Listing ID: </b>".$row['listingID']."</p>
                             <p style='margin-bottom: 0px;'><b>Listing Date: </b>" .$row['listingdate']. "</p>
                             <p style='margin-bottom: 0px;'><b>Product Name: </b>".$row['productname']."</p>
                             <p style='margin-bottom: 0px;'><b>URL: </b><a id='listurl' href='".$row['listingURL']."' target='_blank' rel='noopener noreferrer'>".$row['listingURL']."</a></p>
-                        </div>
-                        <div class='col d-lg-flex justify-content-center align-items-lg-center'>
-                            <label for='priority'>Priority?
-                                <input type='checkbox' id='priority' name='priority' <?php if (".$row['listingpriority']." == 1) echo checked='checked'; ?>
-                            </label>
                         </div>
                         <div class='col d-lg-flex justify-content-end align-items-lg-center'>
                             <button class='btn' name='delete' type='submit' style='background: #FDB022'><i class='fas fa-trash'></i></button>
