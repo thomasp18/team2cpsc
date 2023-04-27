@@ -45,6 +45,7 @@
         <div class="container-fluid"><a href="<?php if (isset($_SESSION["role"])) {if ($_SESSION["role"] == "CPSCManager") {echo "MangHome.php";} if ($_SESSION["role"] == "CPSCInvestigator") {echo "InvestHome.php";}}  ?>"><img src="Images/CPSClogo.png" alt="CPSC logo" width="80" class="logo"></a><i class="fas fa-flag text-dark"></i>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="<?php if (isset($_SESSION["role"])) {if ($_SESSION["role"] == "CPSCManager") {echo "MangHome.php";} if ($_SESSION["role"] == "CPSCInvestigator") {echo "InvestHome.php";}}  ?>">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="Recalls.php">Recalled Products</a></li>
                     <li class="nav-item"><a class="nav-link active" href="<?php echo $_SERVER['PHP_SELF']; ?>">Listings</a></li>
                     <li class="nav-item"><a class="nav-link" href="Reports.php">Reports</a></li>
